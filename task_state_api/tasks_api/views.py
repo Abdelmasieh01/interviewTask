@@ -18,12 +18,13 @@ class TaskViewSet(viewsets.ModelViewSet):
         task = Task.objects.get(pk=pk)
         item = TaskSerializer(instance=task, data=request.data)
 
+        #Previous state before update
         prev = task.state
 
         if item.is_valid():
-            curr = request.POST.get('state', False)
-            print(curr)
-            if (prev == curr) or (prev == 'dr' and curr == 'ac') or (prev == 'ac' and curr == 'dn') or (curr == 'ar'):
+            #Current state from the form
+            curr = int(request.POST.get('state', False))
+            if (prev == curr) or (curr - prev == 1) or (curr == 3):
                 item.save()
                 return Response(data=item.data, status=status.HTTP_202_ACCEPTED)
             else:
