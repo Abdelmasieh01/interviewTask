@@ -9,15 +9,13 @@ array = input('Enter array elements: ').split(' ', size)
 for i in range(size):
     array[i] = int(array[i])
 
-minimum_diff = 10000
+#Setting an initial value for the variable
+minimum_diff = array[0] - array[1]
 
 for i in range(size):
     for j in range(i+1, size):
         if abs(array[i]-array[j]) < minimum_diff:
             minimum_diff = abs(array[i]-array[j])
-
-if minimum_diff == 10000:
-    print('An error happened.')
 
 else:
     print(minimum_diff)
